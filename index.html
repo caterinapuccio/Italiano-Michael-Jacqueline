@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Correzioni & Grammatica B2</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F4EE; --ink: #1C1A16; --ink-light: #5C5849; --ink-faint: #A09990;
+    --red: #C84B2F; --green: #2D6A4F; --gold: #C9973A; --blue: #2A5FA5;
+    --border: #E0DAD0; --card: #FFFFFF; --reveal-bg: #F0EDE5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; }
+  nav { position: sticky; top: 0; z-index: 100; background: var(--cream); border-bottom: 1px solid var(--border); padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+  nav .brand { font-family: 'DM Serif Display', serif; font-size: 1.1rem; }
+  nav .nav-links { display: flex; gap: 1.5rem; }
+  nav .nav-links a { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; }
+  nav .nav-links a:hover { color: var(--ink); }
+  .hero { padding: 5rem 2rem 3rem; max-width: 760px; margin: 0 auto; text-align: center; }
+  .hero .label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1rem; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.15; margin-bottom: 1rem; }
+  .hero h1 em { font-style: italic; color: var(--red); }
+  .hero p { font-size: 1rem; color: var(--ink-light); max-width: 480px; margin: 0 auto 2rem; }
+  .progress-bar-wrap { background: var(--border); border-radius: 999px; height: 4px; max-width: 320px; margin: 0 auto; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--red); border-radius: 999px; width: 0%; transition: width 0.4s ease; }
+  .progress-label { font-size: 0.78rem; color: var(--ink-faint); margin-top: 0.5rem; }
+  .section-title { max-width: 760px; margin: 3rem auto 1.5rem; padding: 0 2rem; display: flex; align-items: center; gap: 1rem; }
+  .section-title h2 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; white-space: nowrap; }
+  .section-title .line { flex: 1; height: 1px; background: var(--border); }
+  .cards { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; transition: box-shadow 0.2s; }
+  .card:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+  .card-header { padding: 1.25rem 1.5rem; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; user-select: none; }
+  .card-num { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.3rem; }
+  .wrong-phrase { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--red); font-style: italic; }
+  .toggle-btn { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; background: transparent; transition: background 0.2s, transform 0.3s; color: var(--ink-light); font-size: 1rem; cursor: pointer; }
+  .toggle-btn.open { transform: rotate(45deg); }
+  .card-reveal { display: none; padding: 0 1.5rem 1.5rem; border-top: 1px solid var(--border); animation: slideDown 0.25s ease; }
+  .card-reveal.open { display: block; }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+  .correct-phrase { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--green); font-style: italic; padding: 1rem 0 0.75rem; }
+  .neutral-phrase { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--blue); font-style: italic; padding: 1rem 0 0.75rem; }
+  .theory { font-size: 0.9rem; color: var(--ink-light); line-height: 1.7; }
+  .theory p { margin-bottom: 0.5rem; }
+  .theory strong { color: var(--ink); font-weight: 500; }
+  .theory .rule-block { background: var(--reveal-bg); border-left: 3px solid var(--gold); border-radius: 0 6px 6px 0; padding: 0.6rem 0.9rem; margin: 0.75rem 0; font-size: 0.88rem; }
+  .theory table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.75rem 0; }
+  .theory th { text-align: left; font-weight: 500; color: var(--ink); padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border); background: var(--reveal-bg); }
+  .theory td { padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border); color: var(--ink-light); }
+  .theory td:first-child { color: var(--ink); }
+  .wrong { color: var(--red); } .correct-t { color: var(--green); }
+  .vocab-chip { display: inline-block; background: var(--reveal-bg); border: 1px solid var(--border); border-radius: 999px; padding: 0.15rem 0.7rem; font-size: 0.8rem; color: var(--ink-light); margin: 0.2rem 0.15rem; }
+  .img-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 0.75rem 0; }
+  .img-pill { border-radius: 10px; overflow: hidden; border: 1px solid var(--border); display: flex; flex-direction: column; max-width: 160px; }
+  .img-pill img { width: 160px; height: 110px; object-fit: cover; display: block; }
+  .img-pill .img-cap { font-size: 0.75rem; color: var(--ink-light); padding: 0.35rem 0.6rem; background: var(--reveal-bg); font-style: italic; }
+  .diag-wrap { margin: 1rem 0; }
+  .diag-tag { font-size: 0.68rem; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .diag-row { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+  .diag-node { background: var(--reveal-bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.35rem 0.7rem; font-weight: 500; font-size: 0.83rem; white-space: nowrap; }
+  .diag-green { background: #E8F5EE; border-color: #A8D8B8; color: var(--green); }
+  .diag-blue { background: #E8F0FA; border-color: #B8CCE8; color: var(--blue); }
+  .diag-arrow { color: var(--ink-faint); font-size: 0.95rem; }
+  .diag-col { display: flex; flex-direction: column; align-items: center; }
+  .diag-label { font-size: 0.7rem; color: var(--ink-faint); margin-top: 0.15rem; }
+  .pronun-box { background: #FEF6E4; border: 1px solid #F0D080; border-radius: 10px; padding: 0.7rem 1rem; margin: 0.75rem 0; font-size: 0.88rem; }
+  .pronun-box .pronun-title { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #9A7020; font-weight: 500; margin-bottom: 0.3rem; }
+  .pronun-box .phonetic { font-size: 1.1rem; font-family: 'DM Serif Display', serif; color: var(--ink); letter-spacing: 0.05em; }
+  .pronun-box .pronun-note { font-size: 0.82rem; color: var(--ink-light); margin-top: 0.25rem; }
+  /* SVG tappa */
+  .tappa-svg { width: 100%; max-width: 400px; margin: 0.75rem 0; }
+  /* exercises */
+  .exercises-wrap { max-width: 760px; margin: 0 auto; padding: 0 2rem 4rem; }
+  .ex-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .ex-tab { font-size: 0.78rem; padding: 0.4rem 1rem; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--ink-light); cursor: pointer; transition: all 0.2s; }
+  .ex-tab.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .ex-section { display: none; }
+  .ex-section.visible { display: block; }
+  .ex-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 0.75rem; }
+  .ex-num { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.5rem; }
+  .ex-text { font-size: 1rem; color: var(--ink); line-height: 1.9; margin-bottom: 0.75rem; }
+  .ex-text select { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; padding: 0.25rem 0.5rem; border: 1px solid var(--border); border-radius: 6px; background: var(--cream); color: var(--ink); cursor: pointer; }
+  .check-btn { font-size: 0.78rem; padding: 0.4rem 1.1rem; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--ink-light); cursor: pointer; transition: all 0.2s; }
+  .check-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .check-btn:disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+  .ex-feedback { display: none; font-size: 0.85rem; margin-top: 0.6rem; padding: 0.55rem 0.9rem; border-radius: 8px; line-height: 1.5; }
+  .ex-feedback.correct { display: block; background: #EAF5EE; color: var(--green); }
+  .ex-feedback.wrong { display: block; background: #FBF0ED; color: var(--red); }
+  .score-strip { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1.5rem; margin-top: 1rem; }
+  .score-big { font-family: 'DM Serif Display', serif; font-size: 2rem; }
+  .score-sub { font-size: 0.8rem; color: var(--ink-faint); }
+  .reset-btn { margin-left: auto; font-size: 0.78rem; padding: 0.4rem 1.1rem; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--ink-light); cursor: pointer; }
+  .c1-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--blue); text-decoration: none; background: #E8F0FA; border: 1px solid #B8CCE8; border-radius: 999px; padding: 0.25rem 0.75rem; margin-top: 0.5rem; }
+  .c1-link:hover { background: #D0E4F5; }
+  footer { text-align: center; padding: 2rem; font-size: 0.78rem; color: var(--ink-faint); border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Italiano B2</span>
+  <div class="nav-links">
+    <a href="#correzioni">Correzioni</a>
+    <a href="#esercizi">Esercizi</a>
+    <a href="condizionale.html" target="_blank">Approfondimento C1 →</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="label">Ripasso lezione</div>
+  <h1>Errori & <em>correzioni</em></h1>
+  <p>Clicca su ogni frase per scoprire la correzione e la teoria.</p>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar"></div></div>
+  <div class="progress-label" id="plabel">0 / 30 frasi aperte</div>
+</div>
+
+<div class="section-title" id="correzioni">
+  <div class="line"></div><h2>Verbi & ausiliari</h2><div class="line"></div>
+</div>
+<div class="cards">
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">1 · Essere vs. stare</div><div class="wrong-phrase">"quando stai incinta"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ quando sei incinta</div>
+      <div class="theory">
+        <p><em>Stare</em> si usa per stati fisici momentanei o posture: <em>sto bene, sto seduto</em>.</p>
+        <p>La gravidanza è uno <strong>stato d'essere</strong> → verbo <strong>essere</strong>.</p>
+        <div class="rule-block">sono stanca · sono malata · <strong>sono incinta</strong> · sono felice</div>
+        <div class="img-row">
+          <div class="img-pill"><img src="https://images.unsplash.com/photo-1584515933487-779824d29309?w=320&q=80" alt="donna incinta"><div class="img-cap">sono incinta</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">2 · Participio irregolare + ortografia</div><div class="wrong-phrase">"abbiamo prenduto un vuolo"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ abbiamo preso un volo</div>
+      <div class="theory">
+        <p><strong>(1)</strong> <em>Prendere</em> ha participio passato irregolare → <strong>preso</strong>. La forma <em>prenduto</em> non esiste.</p>
+        <p><strong>(2)</strong> <em>Vuolo</em> non esiste → <strong>volo</strong>.</p>
+        <div class="rule-block">prendere → <strong>preso</strong> · fare → <strong>fatto</strong> · vedere → <strong>visto</strong> · scrivere → <strong>scritto</strong></div>
+        <div class="img-row">
+          <div class="img-pill"><img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=320&q=80" alt="aereo"><div class="img-cap">il volo parte / arriva</div></div>
+          <div class="img-pill"><img src="https://images.unsplash.com/photo-1569950044272-e796d9e841f4?w=320&q=80" alt="aereo runway"><div class="img-cap">l'aereo decolla / atterra</div></div>
+        </div>
+        <p><strong>Verbi del volo:</strong> il volo <strong>parte / arriva</strong> · l'aereo <strong>decolla / atterra</strong> · i passeggeri <strong>si imbarcano</strong>. Il volo non "inizia".</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">3 · Ausiliare ESSERE nei tempi composti</div><div class="wrong-phrase">"dopo il Canada abbiamo ritornato agli Stati Uniti"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ dopo il Canada siamo tornati negli Stati Uniti</div>
+      <div class="theory">
+        <p>La regola ausiliare ESSERE/AVERE non dipende semplicemente da "transitivo vs. intransitivo" — dipende principalmente dalla <strong>classe semantica del verbo</strong>.</p>
+        <p>I verbi che richiedono <strong>ESSERE</strong> appartengono a queste categorie:</p>
+        <div class="rule-block">
+          · verbi di <strong>moto</strong>: andare, venire, partire, tornare, arrivare, uscire, entrare<br>
+          · verbi di <strong>cambiamento di stato</strong>: nascere, morire, diventare, crescere, ingrassare<br>
+          · verbi <strong>riflessivi</strong>: alzarsi, svegliarsi, vestirsi<br>
+          · alcuni verbi <strong>meteorologici</strong>: è piovuto, è nevicato
+        </div>
+        <p>I verbi <strong>transitivi</strong> (con oggetto diretto) usano quasi sempre <strong>AVERE</strong>.</p>
+        <p>Attenzione: alcuni verbi oscillano. <em>Correre</em> può avere entrambi gli ausiliari con sfumature diverse.</p>
+        <div class="diag-wrap">
+          <div class="diag-tag">verbo di moto — ESSERE</div>
+          <div class="diag-row">
+            <div class="diag-col"><div class="diag-node">Mario</div><div class="diag-label">soggetto</div></div>
+            <div class="diag-arrow">+</div>
+            <div class="diag-col"><div class="diag-node diag-blue">è (ESSERE)</div><div class="diag-label">ausiliare</div></div>
+            <div class="diag-arrow">+</div>
+            <div class="diag-col"><div class="diag-node diag-green">tornato</div><div class="diag-label">participio</div></div>
+          </div>
+          <div class="diag-tag" style="margin-top:0.75rem;">verbo con oggetto diretto — AVERE</div>
+          <div class="diag-row">
+            <div class="diag-col"><div class="diag-node">Mario</div><div class="diag-label">soggetto</div></div>
+            <div class="diag-arrow">+</div>
+            <div class="diag-col"><div class="diag-node diag-green">ha comprato</div><div class="diag-label">AVERE + part.</div></div>
+            <div class="diag-arrow">——▶</div>
+            <div class="diag-col"><div class="diag-node">una macchina</div><div class="diag-label">oggetto diretto</div></div>
+          </div>
+        </div>
+        <div class="rule-block">arrivare · partire · tornare · andare · venire · uscire → tutti con <strong>ESSERE</strong></div>
+        <p>Nota: <em>ritornare</em> con "dopo" è ridondante. Preferire <strong>tornare</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">4 · Ausiliare ESSERE</div><div class="wrong-phrase">"ho ritornato sabato"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ sono tornato/a sabato</div>
+      <div class="theory">
+        <p>Stessa regola della carta 3: <em>tornare</em> = verbo di moto → ausiliare <strong>ESSERE</strong>.</p>
+        <p>Il participio concorda con il soggetto: <em>tornato</em> (m.) / <em>tornata</em> (f.).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">5 · Ausiliare ESSERE</div><div class="wrong-phrase">"quando abbiamo arrivato qui"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ quando siamo arrivati qui</div>
+      <div class="theory">
+        <p><em>Arrivare</em> = verbo di moto → ausiliare <strong>ESSERE</strong>.</p>
+        <p>In tedesco si dice correttamente <em>wir sind angekommen</em> — la logica è la stessa.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">6 · Lessico legislativo + participio irregolare</div><div class="wrong-phrase">"il Canada ha prenduto le regole degli Stati Uniti"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ il Canada ha adottato le normative degli Stati Uniti</div>
+      <div class="theory">
+        <p><strong>(1)</strong> <em>Prenduto</em> non esiste → participio irregolare <strong>preso</strong>.</p>
+        <p><strong>(2)</strong> In contesto legislativo non si "prendono" le regole: si usano <strong>adottare, recepire, allinearsi a</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">7 · Riunioni — ortografia e registro</div><div class="wrong-phrase">"abbiamo fatto i runioni"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ abbiamo tenuto delle riunioni</div>
+      <div class="theory">
+        <p><strong>(1)</strong> Errore fonetico: <strong>riunioni</strong>, non <em>runioni</em>.</p>
+        <p><strong>(2)</strong> <em>Riunione</em> è femminile → <em>le riunioni</em>.</p>
+        <p><strong>(3)</strong> Nel registro formale si preferisce <strong>tenere una riunione</strong>; nel parlato anche <em>fare una riunione</em> è accettabile.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">8 · Preposizione obbligatoria dopo aggettivo</div><div class="wrong-phrase">"sono molto motivati trovare le soluzioni"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ sono molto motivati <strong>a</strong> trovare le soluzioni</div>
+      <div class="theory">
+        <p>L'aggettivo <em>motivato</em> regge la preposizione <strong>A</strong> prima dell'infinito. Senza preposizione la frase è agrammaticale.</p>
+        <div class="rule-block">motivato <strong>a</strong> fare · spinto <strong>a</strong> cercare · disposto <strong>a</strong> collaborare · pronto <strong>a</strong> partire</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">9 · Discutere — coniugazione e reggenza</div><div class="wrong-phrase">"per discutare i temi differenti"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ per discutere di argomenti diversi</div>
+      <div class="theory">
+        <p><strong>(1)</strong> <em>Discutare</em> non esiste → <strong>discutere</strong> (2ª coniugazione, infinito in <em>-ere</em>).</p>
+        <div class="pronun-box">
+          <div class="pronun-title">Pronuncia</div>
+          <div class="phonetic">dis-<strong>CU</strong>-te-re</div>
+          <div class="pronun-note">Accento sulla seconda sillaba — <strong>CU</strong>. Non <em>DI-scu-tare</em> (forma inesistente). La <em>c</em> davanti a <em>u</em> è dura, come in "cuore".</div>
+        </div>
+        <p><strong>(2)</strong> <em>Discutere</em> regge la preposizione <strong>DI</strong>: <em>discutere di politica, discutere di normative</em>.</p>
+        <p><strong>(3)</strong> <em>Temi differenti</em> → <em>argomenti diversi</em> è più naturale nel parlato.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">10 · Condizionale passato — desiderio non realizzato</div><div class="wrong-phrase">"anche io ho voluto comprare"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ anch'io avrei voluto comprare qualcosa</div>
+      <div class="theory">
+        <p>Per esprimere un desiderio del passato che <strong>non si è realizzato</strong> → <strong>condizionale passato</strong>.</p>
+        <p><em>Ho voluto comprare</em> = l'hai fatto. <em>Avrei voluto comprare</em> = volevi ma non l'hai fatto.</p>
+        <div class="rule-block">Costruzione: condizionale presente di avere/essere + participio passato<br>avrei voluto · avrebbe potuto · avremmo dovuto</div>
+        <p>Parallelo tedesco: <em>ich hätte kaufen wollen</em> → stessa struttura logica.</p>
+        <p style="margin-top:0.6rem; padding-top:0.6rem; border-top:1px solid var(--border);"><strong>Nota:</strong> <em>Pensavo che sarebbe venuto</em> è <strong>corretto</strong> in italiano — focus sull'aspettativa non realizzata. <em>Pensavo che fosse venuto</em> = credevi che fosse già arrivato in quel momento. Livello C1 →</p>
+        <a class="c1-link" href="condizionale.html" target="_blank">📄 Approfondimento C1: condizionale vs. congiuntivo trapassato</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-title">
+  <div class="line"></div><h2>C'è · ci sono</h2><div class="line"></div>
+</div>
+<div class="cards">
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">11 · Accordo con soggetto plurale</div><div class="wrong-phrase">"c'è le regola / c'è le legislative differente"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ ci sono le regole · ci sono normative diverse</div>
+      <div class="theory">
+        <p><strong>C'è</strong> = esiste UNA cosa (singolare). <strong>Ci sono</strong> = esistono PIÙ cose (plurale).</p>
+        <p>Il verbo concorda con il soggetto, anche quando viene dopo il verbo.</p>
+        <div class="rule-block">C'è un problema. · Ci sono due problemi.<br>C'è una regola. · Ci sono molte regole.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">12 · Accordo plurale — errore ripetuto</div><div class="wrong-phrase">"c'é molte regole / c'é molte negozi / c'é anche le hotel"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ ci sono molte regole · ci sono molti negozi · ci sono anche gli alberghi</div>
+      <div class="theory">
+        <p>Errore sistematico ripetuto più volte. Soggetto plurale → sempre <strong>CI SONO</strong>.</p>
+        <div class="rule-block">Regola rapida: se puoi contare più di uno → <strong>ci sono</strong></div>
+        <p>Nota: il termine italiano per <em>hotel</em> è <strong>albergo</strong> → <em>gli alberghi</em>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">13 · Genere del sostantivo</div><div class="wrong-phrase">"c'é una ponte per gli Stati Uniti"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ c'è un ponte verso gli Stati Uniti</div>
+      <div class="theory">
+        <p><strong>(1)</strong> <em>Ponte</em> è <strong>maschile</strong> → <em>un ponte</em>.</p>
+        <p><strong>(2)</strong> Direzione verso → <strong>verso</strong>. <em>Per</em> indica scopo o destinazione (<em>parto per Roma</em>).</p>
+        <div class="img-row">
+          <div class="img-pill"><img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=320&q=80" alt="ponte"><div class="img-cap">un ponte (maschile)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-title">
+  <div class="line"></div><h2>Preposizioni</h2><div class="line"></div>
+</div>
+<div class="cards">
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">14 · Moto da / a luogo</div><div class="wrong-phrase">"hannover di amsterdam e dopo di amsterdam a…"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ da Hannover ad Amsterdam, e poi da Amsterdam a…</div>
+      <div class="theory">
+        <table>
+          <tr><th>Situazione</th><th>Preposizione</th><th>Esempio</th></tr>
+          <tr><td>Moto da luogo (città)</td><td><strong>da</strong></td><td>da Hannover, da Roma</td></tr>
+          <tr><td>Moto a luogo (città)</td><td><strong>a / ad</strong></td><td>a Toronto, ad Amsterdam</td></tr>
+          <tr><td>Stato in luogo (città)</td><td><strong>a</strong></td><td>a Detroit, a Berlino</td></tr>
+        </table>
+        <p style="margin-top:0.5rem;"><em>Di</em> non indica mai provenienza con i verbi di movimento.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">15 · Paesi e continenti</div><div class="wrong-phrase">"agli Stati Uniti / a Canada"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ negli Stati Uniti · in Canada</div>
+      <div class="theory">
+        <table>
+          <tr><th>Luogo</th><th>Stato in luogo</th><th>Moto a luogo</th></tr>
+          <tr><td>Paese singolare</td><td><strong>in</strong> Canada</td><td><strong>in</strong> Canada</td></tr>
+          <tr><td>Paese plurale</td><td><strong>negli</strong> Stati Uniti</td><td><strong>negli</strong> Stati Uniti</td></tr>
+          <tr><td>Città</td><td><strong>a</strong> Toronto</td><td><strong>a</strong> Toronto</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">16 · Preposizioni temporali fisse</div><div class="wrong-phrase">"al passato / alla futuro"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ in passato · in futuro</div>
+      <div class="theory">
+        <div class="rule-block"><strong>in passato</strong> (= früher) · <strong>in futuro / nel futuro</strong> (= in Zukunft)</div>
+        <p>Nota: <em>futuro</em> è <strong>maschile</strong> → <em>il futuro</em>, mai <em>la futuro</em>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">17 · Dipendere da</div><div class="wrong-phrase">"dipende delle regole"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ dipende dalle regole</div>
+      <div class="theory">
+        <p><em>Dipendere</em> regge sempre <strong>DA</strong>.</p>
+        <div class="rule-block">DA + le = <strong>dalle</strong> · DA + il = <strong>dal</strong> · DA + i = <strong>dai</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">18 · Venerdì / il venerdì + verbi del volo</div><div class="wrong-phrase">"il volo ha iniziato per ritornare al venerdì sera"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ il volo è partito venerdì sera</div>
+      <div class="theory">
+        <p><strong>(1) Venerdì vs. il venerdì:</strong></p>
+        <table>
+          <tr><th>Forma</th><th>Significato</th><th>Esempio</th></tr>
+          <tr><td><strong>venerdì</strong></td><td>quel preciso venerdì</td><td>Siamo partiti <em>venerdì</em> sera.</td></tr>
+          <tr><td><strong>il venerdì</strong></td><td>ogni venerdì, abitualmente</td><td><em>Il venerdì</em> vado in palestra.</td></tr>
+        </table>
+        <p style="margin-top:0.6rem;"><strong>(2)</strong> Il volo non "inizia" → usa <strong>partire / arrivare</strong>. Vedi carta 2.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-title">
+  <div class="line"></div><h2>Concordanza & lessico</h2><div class="line"></div>
+</div>
+<div class="cards">
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">19 · Possessivi italiani</div><div class="wrong-phrase">"due colleghi di me"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ due miei colleghi</div>
+      <div class="theory">
+        <p>In italiano il possessivo è un <strong>aggettivo</strong>. Non si usa <em>di + pronome personale</em> per il possesso.</p>
+        <div class="rule-block">mio · tuo · suo · nostro · vostro · loro<br><span class="wrong">MAI: di me / di te / di lui</span> per il possesso</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">20 · Nomi epiceni in -a</div><div class="wrong-phrase">"un collego / le due colleghi"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ un collega (m.) · una collega (f.) · le due colleghe</div>
+      <div class="theory">
+        <table>
+          <tr><th></th><th>Singolare</th><th>Plurale</th></tr>
+          <tr><td>Maschile</td><td>il colleg<strong>a</strong></td><td>i colleg<strong>hi</strong></td></tr>
+          <tr><td>Femminile</td><td>la colleg<strong>a</strong></td><td>le colleg<strong>he</strong></td></tr>
+        </table>
+        <p style="margin-top:0.5rem;">Stesso schema: <em>il/la turista · il/la pianista · il/la giornalista</em></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">21 · Concordanza aggettivo-nome</div><div class="wrong-phrase">"le regole sono molto rilassante"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ le normative sono molto permissive / poco restrittive</div>
+      <div class="theory">
+        <p><strong>(1)</strong> Soggetto femminile plurale → aggettivo in <strong>-e</strong>: <em>rilassanti</em> (non <em>rilassante</em>).</p>
+        <p><strong>(2)</strong> <em>Rilassante</em> = <em>entspannend</em>. Per una norma poco severa → <strong>permissivo, blando, poco restrittivo</strong>.</p>
+        <div class="rule-block">rilassante = entspannend · rilassato/a = entspannt</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">22 · Tappa vs. stazione</div><div class="wrong-phrase">"la prima stazione era Washington"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ la prima tappa era Washington</div>
+      <div class="theory">
+        <p><strong>Stazione</strong> = Bahnhof — luogo fisico con binari e treni.</p>
+        <p><strong>Tappa</strong> = punto di un itinerario, fermata di un viaggio o percorso.</p>
+        <div class="img-row">
+          <div class="img-pill"><img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=320&q=80" alt="stazione"><div class="img-cap">la stazione (Bahnhof)</div></div>
+          <div class="img-pill" style="max-width:200px;">
+            <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" style="width:200px;height:80px;display:block;background:#F0EDE5;">
+              <line x1="20" y1="40" x2="180" y2="40" stroke="#C9973A" stroke-width="2.5" stroke-dasharray="6,3"/>
+              <circle cx="20" cy="40" r="7" fill="#2D6A4F"/>
+              <circle cx="75" cy="40" r="7" fill="#2D6A4F"/>
+              <circle cx="130" cy="40" r="7" fill="#2D6A4F"/>
+              <circle cx="180" cy="40" r="7" fill="#2A5FA5"/>
+              <text x="20" y="62" text-anchor="middle" font-size="9" fill="#5C5849" font-family="sans-serif">NY</text>
+              <text x="75" y="62" text-anchor="middle" font-size="9" fill="#5C5849" font-family="sans-serif">DC</text>
+              <text x="130" y="62" text-anchor="middle" font-size="9" fill="#5C5849" font-family="sans-serif">Toronto</text>
+              <text x="180" y="62" text-anchor="middle" font-size="9" fill="#2A5FA5" font-family="sans-serif">Detroit</text>
+              <text x="20" y="26" text-anchor="middle" font-size="8" fill="#2D6A4F" font-family="sans-serif">1ª tappa</text>
+              <text x="75" y="26" text-anchor="middle" font-size="8" fill="#2D6A4F" font-family="sans-serif">2ª tappa</text>
+              <text x="130" y="26" text-anchor="middle" font-size="8" fill="#2D6A4F" font-family="sans-serif">3ª tappa</text>
+              <text x="180" y="26" text-anchor="middle" font-size="8" fill="#2A5FA5" font-family="sans-serif">arrivo</text>
+            </svg>
+            <div class="img-cap">le tappe del viaggio</div>
+          </div>
+        </div>
+        <div class="rule-block">la prima <strong>tappa</strong> · fare una <strong>tappa</strong> a Detroit · una <strong>tappa</strong> fondamentale</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">23 · Ordine nome + nome proprio</div><div class="wrong-phrase">"un'altra parte del Volkswagen gruppo"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ un'altra divisione del gruppo Volkswagen</div>
+      <div class="theory">
+        <p><strong>(1)</strong> In italiano il nome proprio viene <strong>dopo</strong> il nome comune: <em>il gruppo Volkswagen</em>.</p>
+        <p><strong>(2)</strong> In contesto aziendale → <strong>divisione, ramo, filiale, sede</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">24 · Partire da vs. uscire da — sfumatura</div><div class="wrong-phrase">"quando siamo partiti dalla fabbrica"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="neutral-phrase">→ entrambe le forme sono corrette, con sfumature diverse</div>
+      <div class="theory">
+        <table>
+          <tr><th>Verbo</th><th>Focus</th><th>Esempio</th></tr>
+          <tr><td><strong>uscire da</strong></td><td>lasciare fisicamente un edificio</td><td><em>Siamo usciti dalla fabbrica e siamo andati a mangiare.</em></td></tr>
+          <tr><td><strong>partire da</strong></td><td>lasciare un luogo per andare altrove</td><td><em>Siamo partiti dalla fabbrica verso l'albergo.</em></td></tr>
+        </table>
+        <p style="margin-top:0.5rem;">La scelta dipende da cosa vuoi comunicare — non è un errore.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">25 · "Have a good time" — falso amico</div><div class="wrong-phrase">"abbiamo avuto un bel tempo"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ ci siamo divertiti molto · è stato un bel viaggio</div>
+      <div class="theory">
+        <p>Falso amico con tedesco (<em>eine schöne Zeit haben</em>) e inglese. <strong>Avere un bel tempo non si dice in italiano.</strong></p>
+        <table>
+          <tr><th>Espressione</th><th>Quando si usa</th></tr>
+          <tr><td><strong>ci siamo divertiti</strong></td><td>una serata, un evento specifico</td></tr>
+          <tr><td><strong>abbiamo passato una bella giornata</strong></td><td>un giorno preciso</td></tr>
+          <tr><td><strong>abbiamo passato un bel periodo</strong></td><td>settimane o mesi (es. all'estero)</td></tr>
+          <tr><td><strong>è stato bello</strong></td><td>valutazione generale</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">26 · Espressioni idiomatiche e vocabolario chiave</div><div class="wrong-phrase">to be on the same page · die Strafe · compliant · pro Umwelt</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ vocabolario da ricordare</div>
+      <div class="theory">
+        <table>
+          <tr><th>Tedesco / inglese</th><th>Italiano</th></tr>
+          <tr><td>to be on the same page</td><td><strong>essere allineati</strong> · <strong>essere sulla stessa lunghezza d'onda</strong></td></tr>
+          <tr><td>nobody cares</td><td><strong>chi se ne frega</strong></td></tr>
+          <tr><td>pro Umwelt</td><td><strong>pro ambiente</strong></td></tr>
+          <tr><td>die Strafe</td><td><strong>la multa</strong></td></tr>
+          <tr><td>compliant sein</td><td><strong>aderire a</strong> / rispettare le normative</td></tr>
+          <tr><td>die Maßnahmen</td><td><strong>le misure</strong></td></tr>
+          <tr><td>der Verfall</td><td><strong>la decadenza</strong></td></tr>
+          <tr><td>ein Optimierungsproblem</td><td><strong>un problema di ottimizzazione</strong></td></tr>
+        </table>
+        <div class="img-row">
+          <div class="img-pill"><img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=320&q=80" alt="città"><div class="img-cap">la decadenza di Detroit</div></div>
+          <div class="img-pill"><img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=320&q=80" alt="legge"><div class="img-cap">l'apparato legislativo</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">27 · Quando vs. se — ipotetico</div><div class="wrong-phrase">"quando non proviamo a trovare soluzioni finiamo così"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ se non cerchiamo di trovare soluzioni, rischiamo di ritrovarci in questa situazione</div>
+      <div class="theory">
+        <p><em>Quando</em> implica certezza. <em>Se</em> introduce una condizione.</p>
+        <div class="rule-block">Struttura: <strong>se + presente indicativo → presente / futuro</strong><br>Se non agiamo ora, rischiamo di arrivare a questo punto.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">28 · Lessico normativo</div><div class="wrong-phrase">"i temi di regolamento / le legislative differente"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ le questioni normative · le normative diverse</div>
+      <div class="theory">
+        <p><em>Regolamento</em> = documento specifico. Per il concetto generale → <strong>la normativa</strong> (sost.) o <strong>normativo</strong> (agg.).</p>
+        <div class="rule-block"><span class="vocab-chip">la normativa</span> <span class="vocab-chip">la regolamentazione</span> <span class="vocab-chip">la misura</span> <span class="vocab-chip">aderire a</span> <span class="vocab-chip">l'apparato legislativo</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">29 · Gli standard — articolo con st-</div><div class="wrong-phrase">"con i standard tecnici"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ con <strong>gli</strong> standard tecnici</div>
+      <div class="theory">
+        <p><em>Standard</em> inizia con <em>st-</em> → articolo <strong>gli</strong>, non <em>i</em>.</p>
+        <div class="rule-block">lo standard → <strong>gli standard</strong><br>gli studenti · gli strumenti · gli stadi</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div><div class="card-num">30 · Macchina più venduta — superlativo relativo</div><div class="wrong-phrase">"la macchina più venduta degli stati uniti"</div></div>
+      <div class="toggle-btn">+</div>
+    </div>
+    <div class="card-reveal">
+      <div class="correct-phrase">→ la macchina più venduta degli Stati Uniti ✓</div>
+      <div class="theory">
+        <p>La struttura è <strong>corretta</strong>: superlativo relativo = <em>la più + aggettivo + di</em>.</p>
+        <p>Unica nota: i nomi di nazioni vanno con la maiuscola — <strong>Stati Uniti</strong>, non <em>stati uniti</em>.</p>
+        <div class="img-row">
+          <div class="img-pill"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=320&q=80" alt="macchina"><div class="img-cap">la macchina più venduta</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ESERCIZI -->
+<div class="section-title" id="esercizi" style="margin-top: 4rem;">
+  <div class="line"></div><h2>Esercizi B2</h2><div class="line"></div>
+</div>
+<div class="exercises-wrap">
+  <div class="ex-tabs">
+    <button class="ex-tab active" onclick="showEx('ex1',this)">1 · C'è / ci sono</button>
+    <button class="ex-tab" onclick="showEx('ex2',this)">2 · Ausiliari</button>
+    <button class="ex-tab" onclick="showEx('ex3',this)">3 · Participi</button>
+    <button class="ex-tab" onclick="showEx('ex4',this)">4 · Preposizioni geo.</button>
+    <button class="ex-tab" onclick="showEx('ex5',this)">5 · Concordanza</button>
+  </div>
+
+  <div class="ex-section visible" id="ex1">
+    <div class="ex-card"><div class="ex-num">1 · 6 — attenzione al soggetto reale</div><div class="ex-text">Nel rapporto finale <select id="q1"><option value="">—</option><option>c'è</option><option>ci sono</option></select> un'analisi dettagliata delle emissioni e tre raccomandazioni operative.</div><button class="check-btn" onclick="chk('q1','ci sono','Soggetto reale = un\'analisi E tre raccomandazioni → plurale → ci sono.')">verifica</button><div class="ex-feedback" id="q1f"></div></div>
+    <div class="ex-card"><div class="ex-num">2 · 6 — sostantivo massa</div><div class="ex-text">In questa regione <select id="q2"><option value="">—</option><option>c'è</option><option>ci sono</option></select> pochissima industria manifatturiera.</div><button class="check-btn" onclick="chk('q2','c\'è','Industria manifatturiera è singolare → c\'è. Pochissima non crea un plurale.')">verifica</button><div class="ex-feedback" id="q2f"></div></div>
+    <div class="ex-card"><div class="ex-num">3 · 6 — soggetto posticipato</div><div class="ex-text">Tra le possibili soluzioni <select id="q3"><option value="">—</option><option>c'è</option><option>ci sono</option></select> anche quella di adottare standard europei.</div><button class="check-btn" onclick="chk('q3','c\'è','Il soggetto è singolare: quella (soluzione) → c\'è. Non confondere con il complemento "possibili soluzioni".')">verifica</button><div class="ex-feedback" id="q3f"></div></div>
+    <div class="ex-card"><div class="ex-num">4 · 6</div><div class="ex-text">Nel gruppo Volkswagen <select id="q4"><option value="">—</option><option>c'è</option><option>ci sono</option></select> diverse normative interne che ogni divisione deve rispettare.</div><button class="check-btn" onclick="chk('q4','ci sono','Soggetto: diverse normative (plurale) → ci sono.')">verifica</button><div class="ex-feedback" id="q4f"></div></div>
+    <div class="ex-card"><div class="ex-num">5 · 6 — lista coordinata</div><div class="ex-text">Vicino alle cascate <select id="q5"><option value="">—</option><option>c'è</option><option>ci sono</option></select> un ponte, due ristoranti e un grande parcheggio.</div><button class="check-btn" onclick="chk('q5','ci sono','Lista coordinata = soggetto plurale → ci sono. Il primo elemento singolare non conta.')">verifica</button><div class="ex-feedback" id="q5f"></div></div>
+    <div class="ex-card"><div class="ex-num">6 · 6 — sostantivo astratto</div><div class="ex-text">Nel settore automotive americano <select id="q6"><option value="">—</option><option>c'è</option><option>ci sono</option></select> ancora molta resistenza al cambiamento.</div><button class="check-btn" onclick="chk('q6','c\'è','Molta resistenza = singolare → c\'è.')">verifica</button><div class="ex-feedback" id="q6f"></div></div>
+  </div>
+
+  <div class="ex-section" id="ex2">
+    <div class="ex-card"><div class="ex-num">1 · 5</div><div class="ex-text">Dopo la visita alla fabbrica, Marco <select id="q7"><option value="">—</option><option>è tornato</option><option>ha tornato</option></select> in albergo a piedi.</div><button class="check-btn" onclick="chk('q7','è tornato','Tornare = verbo di moto → ESSERE.')">verifica</button><div class="ex-feedback" id="q7f"></div></div>
+    <div class="ex-card"><div class="ex-num">2 · 5 — concordanza participio</div><div class="ex-text">Le due colleghe <select id="q8"><option value="">—</option><option>sono arrivate</option><option>hanno arrivato</option><option>sono arrivati</option></select> a Toronto con un volo diretto.</div><button class="check-btn" onclick="chk('q8','sono arrivate','Arrivare → ESSERE. Soggetto femminile plurale → sono arrivate. Sono arrivati sarebbe per soggetto maschile.')">verifica</button><div class="ex-feedback" id="q8f"></div></div>
+    <div class="ex-card"><div class="ex-num">3 · 5</div><div class="ex-text">Venerdì sera noi <select id="q9"><option value="">—</option><option>siamo partiti</option><option>abbiamo partito</option></select> dagli Stati Uniti per rientrare in Europa.</div><button class="check-btn" onclick="chk('q9','siamo partiti','Partire = verbo di moto → ESSERE.')">verifica</button><div class="ex-feedback" id="q9f"></div></div>
+    <div class="ex-card"><div class="ex-num">4 · 5 — transitivo</div><div class="ex-text">Durante il viaggio, il gruppo <select id="q10"><option value="">—</option><option>ha visitato</option><option>è visitato</option></select> tre impianti produttivi.</div><button class="check-btn" onclick="chk('q10','ha visitato','Visitare ha oggetto diretto (tre impianti) → AVERE.')">verifica</button><div class="ex-feedback" id="q10f"></div></div>
+    <div class="ex-card"><div class="ex-num">5 · 5</div><div class="ex-text">Le colleghe <select id="q11"><option value="">—</option><option>sono uscite</option><option>hanno uscito</option></select> dalla riunione soddisfatte.</div><button class="check-btn" onclick="chk('q11','sono uscite','Uscire = verbo di moto → ESSERE. Participio femminile plurale: uscite.')">verifica</button><div class="ex-feedback" id="q11f"></div></div>
+  </div>
+
+  <div class="ex-section" id="ex3">
+    <div class="ex-card"><div class="ex-num">1 · 5</div><div class="ex-text">Il Canada ha <select id="q12"><option value="">—</option><option>preso</option><option>prenduto</option><option>priso</option></select> ispirazione dalle normative statunitensi.</div><button class="check-btn" onclick="chk('q12','preso','Prendere → preso.')">verifica</button><div class="ex-feedback" id="q12f"></div></div>
+    <div class="ex-card"><div class="ex-num">2 · 5</div><div class="ex-text">Abbiamo <select id="q13"><option value="">—</option><option>fatto</option><option>facuto</option><option>fato</option></select> tre riunioni in due giorni.</div><button class="check-btn" onclick="chk('q13','fatto','Fare → fatto.')">verifica</button><div class="ex-feedback" id="q13f"></div></div>
+    <div class="ex-card"><div class="ex-num">3 · 5</div><div class="ex-text">I legislatori hanno <select id="q14"><option value="">—</option><option>deciso</option><option>deciduto</option><option>decisto</option></select> di adottare standard più severi.</div><button class="check-btn" onclick="chk('q14','deciso','Decidere → deciso.')">verifica</button><div class="ex-feedback" id="q14f"></div></div>
+    <div class="ex-card"><div class="ex-num">4 · 5</div><div class="ex-text">Hanno <select id="q15"><option value="">—</option><option>scritto</option><option>scrivuto</option><option>scrito</option></select> un rapporto dettagliato sulle emissioni.</div><button class="check-btn" onclick="chk('q15','scritto','Scrivere → scritto.')">verifica</button><div class="ex-feedback" id="q15f"></div></div>
+    <div class="ex-card"><div class="ex-num">5 · 5</div><div class="ex-text">Il direttore ha <select id="q16"><option value="">—</option><option>risposto</option><option>risponduto</option><option>rispostato</option></select> alla nostra proposta entro 24 ore.</div><button class="check-btn" onclick="chk('q16','risposto','Rispondere → risposto.')">verifica</button><div class="ex-feedback" id="q16f"></div></div>
+  </div>
+
+  <div class="ex-section" id="ex4">
+    <div class="ex-card"><div class="ex-num">1 · 5</div><div class="ex-text">Abbiamo preso un volo diretto <select id="q17"><option value="">—</option><option>da Washington a</option><option>di Washington a</option><option>da Washington per</option></select> Toronto.</div><button class="check-btn" onclick="chk('q17','da Washington a','Moto da luogo → DA. Moto a luogo → A.')">verifica</button><div class="ex-feedback" id="q17f"></div></div>
+    <div class="ex-card"><div class="ex-num">2 · 5</div><div class="ex-text">Dopo il Canada, siamo tornati <select id="q18"><option value="">—</option><option>negli Stati Uniti</option><option>agli Stati Uniti</option><option>in Stati Uniti</option></select>.</div><button class="check-btn" onclick="chk('q18','negli Stati Uniti','Paese plurale: IN + GLI = NEGLI.')">verifica</button><div class="ex-feedback" id="q18f"></div></div>
+    <div class="ex-card"><div class="ex-num">3 · 5</div><div class="ex-text">Ci sono regolamentazioni molto diverse <select id="q19"><option value="">—</option><option>in Canada</option><option>a Canada</option><option>nel Canada</option></select>.</div><button class="check-btn" onclick="chk('q19','in Canada','Paese → IN.')">verifica</button><div class="ex-feedback" id="q19f"></div></div>
+    <div class="ex-card"><div class="ex-num">4 · 5</div><div class="ex-text">Il collega è partito <select id="q20"><option value="">—</option><option>da Hannover</option><option>di Hannover</option><option>a Hannover</option></select> lunedì mattina.</div><button class="check-btn" onclick="chk('q20','da Hannover','Moto da luogo → DA.')">verifica</button><div class="ex-feedback" id="q20f"></div></div>
+    <div class="ex-card"><div class="ex-num">5 · 5</div><div class="ex-text">Questo piano dipende <select id="q21"><option value="">—</option><option>dalle normative</option><option>delle normative</option><option>sulle normative</option></select> europee.</div><button class="check-btn" onclick="chk('q21','dalle normative','Dipendere → DA + le = dalle.')">verifica</button><div class="ex-feedback" id="q21f"></div></div>
+  </div>
+
+  <div class="ex-section" id="ex5">
+    <div class="ex-card"><div class="ex-num">1 · 5</div><div class="ex-text">Ho incontrato <select id="q22"><option value="">—</option><option>due miei colleghi</option><option>due colleghi di me</option><option>due miei colleghe</option></select> americani alla conferenza.</div><button class="check-btn" onclick="chk('q22','due miei colleghi','Il possessivo è aggettivo. MAI "di me".')">verifica</button><div class="ex-feedback" id="q22f"></div></div>
+    <div class="ex-card"><div class="ex-num">2 · 5</div><div class="ex-text">Le due <select id="q23"><option value="">—</option><option>colleghe</option><option>colleghi</option><option>collegi</option></select> del team legale sono molto competenti.</div><button class="check-btn" onclick="chk('q23','colleghe','Plurale femminile di collega → le colleghe.')">verifica</button><div class="ex-feedback" id="q23f"></div></div>
+    <div class="ex-card"><div class="ex-num">3 · 5</div><div class="ex-text">Le normative statunitensi sono considerate troppo <select id="q24"><option value="">—</option><option>permissive</option><option>permissivo</option><option>permissiva</option></select>.</div><button class="check-btn" onclick="chk('q24','permissive','Soggetto femminile plurale → -e.')">verifica</button><div class="ex-feedback" id="q24f"></div></div>
+    <div class="ex-card"><div class="ex-num">4 · 5</div><div class="ex-text">Ieri sera <select id="q25"><option value="">—</option><option>ci siamo divertiti</option><option>abbiamo avuto un bel tempo</option><option>abbiamo passato un bel periodo</option></select> moltissimo alla cena con i colleghi.</div><button class="check-btn" onclick="chk('q25','ci siamo divertiti','Per una serata specifica → ci siamo divertiti. Avere un bel tempo non esiste.')">verifica</button><div class="ex-feedback" id="q25f"></div></div>
+    <div class="ex-card"><div class="ex-num">5 · 5</div><div class="ex-text">È stata <select id="q26"><option value="">—</option><option>un'ottima tappa</option><option>un ottimo tappa</option><option>una ottima tappa</option></select> del nostro viaggio negli Stati Uniti.</div><button class="check-btn" onclick="chk('q26','un\'ottima tappa','Tappa è femminile. Davanti a vocale → un\'ottima (elisione).')">verifica</button><div class="ex-feedback" id="q26f"></div></div>
+  </div>
+
+  <div class="score-strip">
+    <div><div class="score-big" id="scoreNum">0 / 0</div><div class="score-sub">risposte verificate</div></div>
+    <button class="reset-btn" onclick="resetAll()">ricomincia tutto</button>
+  </div>
+</div>
+
+<footer>Lezione B2 · materiale a uso didattico personale</footer>
+
+<script>
+  const TOTAL = 30; let opened = 0; let cm = {}; let tc = 0; let cc = 0;
+  function toggleCard(h) {
+    const r = h.nextElementSibling, b = h.querySelector('.toggle-btn'), o = r.classList.contains('open');
+    r.classList.toggle('open'); b.classList.toggle('open');
+    if (!o) { opened = Math.min(opened+1,TOTAL); document.getElementById('pbar').style.width=(opened/TOTAL*100)+'%'; document.getElementById('plabel').textContent=opened+' / '+TOTAL+' frasi aperte'; }
+  }
+  function showEx(id,btn) {
+    document.querySelectorAll('.ex-section').forEach(s=>s.classList.remove('visible'));
+    document.getElementById(id).classList.add('visible');
+    document.querySelectorAll('.ex-tab').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  function chk(id,ans,expl) {
+    if(cm[id]) return;
+    const s=document.getElementById(id), f=document.getElementById(id+'f');
+    if(!s.value){f.className='ex-feedback wrong';f.textContent='Seleziona una risposta.';return;}
+    cm[id]=true; tc++;
+    const ok=s.value===ans;
+    if(ok){f.className='ex-feedback correct';f.textContent='✓ Corretto — '+expl;cc++;}
+    else{f.className='ex-feedback wrong';f.textContent='✗ Risposta corretta: "'+ans+'". '+expl;}
+    s.disabled=true; s.closest('.ex-card').querySelector('.check-btn').disabled=true;
+    document.getElementById('scoreNum').textContent=cc+' / '+tc;
+  }
+  function resetAll() {
+    cm={}; tc=0; cc=0;
+    document.querySelectorAll('.ex-section select').forEach(s=>{s.value='';s.disabled=false;});
+    document.querySelectorAll('.ex-feedback').forEach(f=>{f.className='ex-feedback';f.textContent='';});
+    document.querySelectorAll('.check-btn').forEach(b=>b.disabled=false);
+    document.getElementById('scoreNum').textContent='0 / 0';
+  }
+</script>
+</body>
+</html>
